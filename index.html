@@ -5,37 +5,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CALCULATOR</title>
+    <title>EXPRESSION CALCULATOR</title>
     <link href="./styles.css" rel="stylesheet" />
     <script src="./script.js" defer></script>
 </head>
 
 <body>
-    <div class="grid">
+    <div class="grid">        
         <div class="top">
             <div data-prev class="top-previous">0</div>
             <div data-curr class="top-current">0</div>
         </div>
-        <button data-store>SM</button>
-        <button data-restore>RM</button>
+        <button data-store>MS</button>
+        <button data-restore class="rm">MR<br />25.2725</button>
         <button data-clear>AC</button>
         <button data-del>DEL</button>
+        <button data-op>(</button>
+        <button data-op>)</button>
+        <button data-op>**</button>
+        <button data-op>/</button>
         <button data-num>1</button>
         <button data-num>2</button>
         <button data-num>3</button>
-        <button data-op>/</button>
+        <button data-op>*</button>
         <button data-num>4</button>
         <button data-num>5</button>
         <button data-num>6</button>
-        <button data-op>x</button>
+        <button data-op>-</button>
         <button data-num>7</button>
         <button data-num>8</button>
         <button data-num>9</button>
-        <button data-op>-</button>
+        <button data-op>+</button>
         <button data-num>.</button>
         <button data-num>0</button>
-        <button data-equals>=</button>
-        <button data-op>+</button>        
+        <button data-equals id="equal">=</button>
     </div>
 </body>
+
 </html>

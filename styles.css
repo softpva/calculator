@@ -10,6 +10,10 @@ body{
     background: linear-gradient(to right, #007799, #0000FF);
 }
 
+.grid .rm{
+    font-size: 1rem;
+}
+
 
 .grid{
     display: grid;
@@ -17,13 +21,13 @@ body{
     align-content: center;
     /* align-items: center; */
     min-height: 100vh;
-    grid-template-columns: repeat(4, 100px);
-    grid-template-rows: minmax(100px, auto) repeat(5, 100px);
+    grid-template-columns: repeat(4, 80px);
+    grid-template-rows: minmax(100px, auto) repeat(6, 80px);
 }
 
 .grid > button{
     cursor: pointer;
-    font-size: 2rem;
+    font-size: 1.5rem;
     border: 1px solid #FFFFFF;
     outline: none;
     background-color: rgba(255,255,255,.7);    
@@ -32,6 +36,10 @@ body{
 
 .grid > button:hover{
     background-color: rgba(255,255,255,.9);    
+}
+
+.grid #equal{
+    grid-column: span 2;
 }
 
 .top {
@@ -52,5 +60,5 @@ body{
     font-size: 1rem;
 }
 .top .top-current {
-    font-size: 2rem;
+    font-size: 1.5rem;
 }

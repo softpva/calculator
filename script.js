@@ -1,57 +1,78 @@
-class Calculator{
-    
-    constructor(prevOpTxt,currOpTxt){
-        this.clear();
-        this.prevOpTxt = prevOpTxt;
-        this.currOpTxt = currOpTxt;
-        this.currOp = '';        
-    }       
+class Calculator {
+    #prevOpTxt = document.querySelector("[data-prev]");
+    #currOpTxt = document.querySelector("[data-curr]");
+    #currOp = '';
+    #operation;
 
-    store(){}
+    // constructor(prevOpTxt, currOpTxt) {
+    //     this.clear();
+    //     this.#prevOpTxt = prevOpTxt;
+    //     this.#currOpTxt = currOpTxt;
+    //     this.numBtEventListener();
+    // }
 
-    restore(){}
-
-    clear(){
-        this.currOpTxt = '';
-        this.prevOpTxt = '';
-        this.operation = undefined;
+    constructor(){
+        this.clear;
+        this.numBtEventListener();
     }
 
-    delete(){}
+    store() { }
 
-    appNum(num){
-        if (num === '.' && this.currOp.includes('.')) return;
-        this.currOp = this.currOp.toString() + num.toString();
-        console.log(this.currOp);
-    }    
+    restore() { }
 
-    chooseOp(op){}
+    clear() {
+        this.#currOpTxt = '';
+        this.#prevOpTxt = '';
+        this.#operation = undefined;
+    }
 
-    calculate(){}
+    delete() { }
 
-    show(){
-        this.currOpTxt.innerText = this.currOp;
+    appNum(num) {
+        if (num === '.' && this.#currOp.includes('.')) return;
+        this.#currOp = this.#currOp.toString() + num.toString();
+        console.log(this.#currOp);
+    }
+
+    chooseOp(op) { }
+
+    calculate() { }
+
+    show() {
+        this.#currOpTxt.innerText = this.#currOp;
+        // this.#prevOpTxt.innerText = eval("15 / 3 + 5 * 2 + 9 ** (1/2)");
+    }
+
+    numBtEventListener() {
+        document.querySelectorAll("[data-num]").forEach(button => {
+            button.addEventListener('click', () => {
+                this.appNum(button.textContent);
+                this.show();
+            })
+        })
     }
 }
 
+// const numBt = document.querySelectorAll("[data-num]");
 
-const numBt = document.querySelectorAll("[data-num]");
+// Unifed to only data-op and transfer to class:
 const opBt = document.querySelectorAll("[data-op]");
 const equalsBt = document.querySelector("[data-equals]");
 const storeBt = document.querySelector("[data-store]");
 const restoreBt = document.querySelector("[data-restore]");
 const clearBt = document.querySelector("[data-clear]");
 const delBt = document.querySelector("[data-del]");
-const prevOpTxt = document.querySelector("[data-prev]");
-const currOpTxt = document.querySelector("[data-curr]");
 
+// transfer to constructor or class fields:
+// const prevOpTxt = document.querySelector("[data-prev]");
+// const currOpTxt = document.querySelector("[data-curr]");
 
+// const calc = new Calculator(prevOpTxt, currOpTxt);
+const calc = new Calculator();
 
-const calc = new Calculator(prevOpTxt,currOpTxt);
-
-numBt.forEach(button => {
-    button.addEventListener('click',() => {
-        calc.appNum(button.textContent);
-        calc.show();
-    })
-});
+// numBt.forEach(button => {
+//     button.addEventListener('click', () => {
+//         calc.appNum(button.textContent);
+//         calc.show();
+//     })
+// });
