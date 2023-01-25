@@ -2,15 +2,14 @@ class Calculator {
     prevOpTxtElm = document.querySelector("[data-prev]");
     currOpTxtElm = document.querySelector("[data-curr]");
     expression = '';
-    isolatedNumber= '';
-    pressedEqual = false;
+    isolNum= '';
 
     
 
     constructor(){
         this.clear;
-        this.opNumBtEventListener();
-        // this.opBtEventListener();
+        this.numBtEventListener();
+        this.opBtEventListener();
     }
 
     store() { }
@@ -24,36 +23,18 @@ class Calculator {
 
     delete() { }
 
-    appendToIsoletedNumber(val){     
-        if (this.pressedEqual){
-            this.expression = '';
-            this.isolatedNumber = '';
-            this.pressedEqual = false;
-        }    
-        if ((val === '-' && this.isolatedNumber === '') || Number.isInteger(parseInt(val)) || val === '.'){
-            if (val === '.' && this.isolatedNumber.includes('.'))  
-                return;
-            this.isolatedNumber += val.toString();
-        } else {            
-            this.appendToExpression(val);
-        }        
-        this.show();
+    appToIsolNumb(num){
+
+        
+
+
     }
 
-    appendToExpression(val) {
-        console.log(val);
-        console.log(this.expression);        
-        this.expression += this.isolatedNumber.toString();
-        this.isolatedNumber = ''
-        if (val === '='){
-            this.isolatedNumber = eval(this.expression).toString();
-            console.log(this.isolatedNumber);
-            // this.expression = '';
-            this.show();
-            this.pressedEqual = true
-            return;
-        }
-        this.expression += val.toString();        
+    appNum(num) {
+        console.log("Last char: " + this.expression[this.expression.length-1] + " " + "Number: " + num);
+        if (num === '.' && this.expression.includes('.')) return;
+        this.expression = this.expression.toString() + num.toString();
+        console.log(this.expression);
     }
 
     appOp(op){
@@ -61,21 +42,29 @@ class Calculator {
         console.log(this.expression);
     } 
 
-    opNumBtEventListener() {        
-        document.querySelectorAll("[data-num], [data-op]" ).forEach(button => {
+    numBtEventListener() {
+        document.querySelectorAll("[data-num]").forEach(button => {
             button.addEventListener('click', () => {
-                this.appendToIsoletedNumber(button.textContent);
-                // this.show();
+                this.appNum(button.textContent);
+                this.show();
+            })
+        })
+    }
+
+    opBtEventListener() {
+        document.querySelectorAll("[data-op]").forEach(button => {
+            button.addEventListener('click', () => {
+                this.appOp(button.textContent);
+                this.show();
             })
         })
     }
 
     show() {
-        this.prevOpTxtElm.innerText = this.expression;
-        this.currOpTxtElm.innerText = this.isolatedNumber;
+        this.currOpTxtElm.innerText = this.expression;
     }
 
-    chooseOp() { }
+    chooseOp(op) { }
 
     calculate() { }
 
