@@ -97,6 +97,7 @@ class Calculator {
         this.pressedEqual = true
         return;
     }
+    
     appOp(op) {
         this.expression = this.expression.toString() + op.toString();
     }

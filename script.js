@@ -1,6 +1,6 @@
 class Calculator {
     expressionTextElement = document.querySelector("[data-expression]");
-    currentTextElement = document.querySelector("[data-current]");
+    numberTextElement = document.querySelector("[data-current]");
     expression = '';
     number = '0';
 
@@ -10,15 +10,16 @@ class Calculator {
     }
 
     appendToNumber(val) {
-        if (this.expression[this.expression.length-1] === '='){
+        if (this.expression[this.expression.length - 1] === '=') {
             this.expression = '';
             this.number = '0'
-        } 
+        }
+        if (this.expression[this.expression.length - 1] === ')') return;
         if (this.number[0] === '0') this.number = '';
-        if (val === '-' && this.number.includes('-')) appendToExpression(val);      
+        if (val === '-' && this.number.includes('-')) appendToExpression(val);
         if (val === '.' && this.number.includes('.')) return;
         if ((val === '-' && this.number === '')
-            || Number.isInteger(parseInt(val)) 
+            || Number.isInteger(parseInt(val))
             || val === '.') {
             this.number += val.toString();
         } else {
@@ -32,19 +33,25 @@ class Calculator {
         if (this.number[0] === '0') this.number = '';
         this.expression += this.number.toString();
         this.number = '0';
-        // if last char in express iNaN return
-        if (isNaN(this.expression[this.expression.length-1])) return;         
+        let lastCharExpr = this.expression[this.expression.length - 1];
+        // exp: 2*(2+3)+5/4   ok  
+        // exp: 2(2+4) -> 2*(2+4) ok
+        if (isNaN(lastCharExpr)) {
+            if (op === '('|| lastCharExpr === ')') {}
+            else return;            
+        }else if (op === '(') op='*(';
 
         this.expression += op.toString();
+        console.log(this.expression);
         this.show();
     }
 
     doCommand(com) {
-        if (com === '=') this.calculate();
+        if (com === '=') this.doWhenEqualSign();
         this.show();
     }
 
-    calculate(){
+    doWhenEqualSign() {
         this.expression += this.number;
         this.number = eval(this.expression).toString();
         this.expression += '=';
@@ -75,7 +82,7 @@ class Calculator {
 
     show() {
         this.expressionTextElement.innerText = this.expression;
-        this.currentTextElement.innerText = this.number;
+        this.numberTextElement.innerText = this.number;
     }
 }
 
