@@ -1,20 +1,24 @@
 class Calculator {
     expressionTextElement = document.querySelector("[data-expression]");
     numberTextElement = document.querySelector("[data-current]");
+    inMemory = document.querySelector("[data-mr");
     expression = '';
     number = '0';
+    openedParenthesis = 0;
+    memory = '0';
 
     constructor() {
         this.clearAll();
         this.buttonEventListener();
     }
 
-    appendToNumber(val) {
-        if (this.expression[this.expression.length - 1] === '=') {
+      appendToNumber(val) {        
+        let lastCharExpr = this.expression[this.expression.length - 1];
+        if (this.lastCharExpr === '=') {
             this.expression = '';
             this.number = '0'
         }
-        if (this.expression[this.expression.length - 1] === ')') return;
+        if (lastCharExpr === ')') return;
         if (this.number[0] === '0') this.number = '';
         if (val === '-' && this.number.includes('-')) appendToExpression(val);
         if (val === '.' && this.number.includes('.')) return;
@@ -34,12 +38,20 @@ class Calculator {
         this.expression += this.number.toString();
         this.number = '0';
         let lastCharExpr = this.expression[this.expression.length - 1];
-        // exp: 2*(2+3)+5/4   ok  
-        // exp: 2(2+4) -> 2*(2+4) ok
+        // exp: 2*(2+3)+5/4= 11.25   ok  
+        // exp: 2(2+4 -> 2*(2+4) = 12 ok 
+        // exp: -(2+3 = -5 ok  
+        // exp: 1-(2+3)*3= -14 ok     
+        // exp: .25*4 = 1 ok  
         if (isNaN(lastCharExpr)) {
             if (op === '('|| lastCharExpr === ')') {}
             else return;            
-        }else if (op === '(') op='*(';
+        }else if (op === '('){
+            op='*(';
+            this.openedParenthesis++;
+        } 
+        if (op === '(') this.openedParenthesis++;
+        if (op === ')') this.openedParenthesis--;
 
         this.expression += op.toString();
         console.log(this.expression);
@@ -48,11 +60,33 @@ class Calculator {
 
     doCommand(com) {
         if (com === '=') this.doWhenEqualSign();
+        if (com === 'AC') this.clearAll();
+        if (com === 'DEL') this.delete();
+        if (com === 'MS') this.setMemory();
         this.show();
+        
     }
 
-    doWhenEqualSign() {
+    setMemory(){
+        if (this.number === '0'){
+            this.memory = this.number;
+            this.inMemory.innerHTML = "MR";
+            return;
+        }
+        this.memory = this.number;
+        this.inMemory.innerHTML = `MR<br/><div class="mem">${this.memory.slice(0,10)}</div>`;
+    }
+
+    doWhenEqualSign() {                
+        if (this.number === '0') this.number = '';
         this.expression += this.number;
+        if (this.openedParenthesis > 0) {
+            for (let i = 0; i < this.openedParenthesis; i++) {
+                this.expression += ')';
+            }
+            this.openedParenthesis = 0;
+        }         
+        console.log(this.expression);
         this.number = eval(this.expression).toString();
         this.expression += '=';
         return;
@@ -77,7 +111,23 @@ class Calculator {
     }
 
     clearAll() {
+        this.expression = '';
+        this.number = '0';
+        return;
+    }
 
+    delete(){        
+        if (this.number !== '0'){
+            this.number = this.number.slice(0,this.number.length-1);
+            if (this.number === '') this.number = '0';
+            return;
+        }
+        if (this.expression !== ''){
+            if (this.expression[this.expression.length-1] === '='){
+                this.expression = this.expression.slice(0,this.expression.length-2); 
+            }
+            this.expression = this.expression.slice(0,this.expression.length-1);            
+        }
     }
 
     show() {
@@ -87,3 +137,4 @@ class Calculator {
 }
 
 const calc = new Calculator();
+

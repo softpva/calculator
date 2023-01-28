@@ -11,7 +11,14 @@ body{
 }
 
 .grid .rm{
+    font-size: 1.5rem;
+    /* font-weight: bold; */
+}
+
+.grid .rm .mem{
     font-size: 1rem;
+    vertical-align: bottom;
+    font-weight: bold;
 }
 
 
