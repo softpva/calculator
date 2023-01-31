@@ -46,7 +46,7 @@ body{
 }
 
 .grid #equal{
-    grid-column: span 2;
+    font-weight: bold;
 }
 
 .top {
