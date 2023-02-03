@@ -10,12 +10,12 @@ body{
     background: linear-gradient(to right, #007799, #0000FF);
 }
 
-.grid .rm{
+.grid .mr{
     font-size: 1.5rem;
     /* font-weight: bold; */
 }
 
-.grid .rm .mem{
+.grid .mr .mem{
     font-size: 1rem;
     vertical-align: bottom;
     font-weight: bold;
