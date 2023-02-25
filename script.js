@@ -11,21 +11,23 @@ class Calculator {
         this.buttonEventListener();
     }
 
-    buildNumber(num) {
-        if (this.s_expression.includes('=') && this.s_number[0] !== '0') this.s_number = '0';
+    buildANumber(num) {
+        if (this.s_expression.includes('=') && this.s_number[0] !== '0'){
+			this.s_number = '0';
+			this.s_expression = ''
+		}
         if (this.s_number.includes('.') && num === '.') return;
         if (this.s_number[0] == '0') this.s_number = '';
         this.s_number += num;
         this.show();
     }
 
-    buildExpression(op) {
+    buildAnExpression(op) {
+        if (op === '**' && this.s_number !== '0') this.s_number = '(' + this.s_number + ')';
         if (this.s_expression.includes('=')) this.s_expression = '';
         let c_penult = this.s_expression.at(-2) || '';
-        // console.log("Expr: " + this.s_expression);
-        // console.log(c_penult + ' ' + this.s_number[0] + ' ' + op);
         if (c_penult === ')' && this.s_number[0] !== '0') this.s_expression += '* ';
-        if (this.s_number[0] !== '0') this.s_expression += (this.s_number + ' ');
+        if (this.s_number[0] !== '0' || this.s_number[1] === '.') this.s_expression += (this.s_number + ' ');
         c_penult = this.s_expression.at(-2) || '';
         if (!isNaN(c_penult) && this.s_expression !== '' && op == '(') op = '* (';
         if (op == ')' && this.n_parenthesis() === 0) return;
@@ -34,27 +36,26 @@ class Calculator {
         this.show();
     }
 
-    equalPressed() {
+    equalIsPressed() {
+        if (this.s_expression.includes('=')) return;
         if (this.s_expression.at(-2) === ')' && this.s_number[0] !== '0') this.s_expression += '* ';
         if (this.s_number[0] !== '0') this.s_expression += (this.s_number + ' ');
         const n_parenthesis = this.n_parenthesis();
         if (n_parenthesis > 0)
             for (let i = 0; i < n_parenthesis; i++) this.s_expression += ') ';
-        console.log("After Equal: " + this.s_expression);
-        this.s_number = eval(this.s_expression).toString();
+        this.s_number = eval(this.s_expression).toString();        
         this.s_number = parseFloat(parseFloat(this.s_number).toPrecision(15)).toString();
         this.s_expression += '= ';
+        console.log("After Equal: " + this.s_expression);
     }
 
     doCommand(com) {
-        if (com === '=') this.equalPressed();
+        if (com === '=') this.equalIsPressed();
         if (com === 'AC') this.clearAll();
         if (com === 'DEL') this.delete();
         if (com === 'MS') this.setMemory();
         if (com === '+/-') this.changeSignal();
-        if (com.toString().includes('MR')) this.s_number = this.s_memory; // <----
-        // if (com.slice(0,2) === 'MR') console.log('oi'); // <----
-        // console.log(com);
+        if (com.toString().includes('MR')) this.s_number = this.s_memory; 
         this.show();
     }
 
@@ -101,12 +102,12 @@ class Calculator {
     buttonEventListener() {
         document.querySelectorAll("[data-num]").forEach(button => {
             button.addEventListener('click', () => {
-                this.buildNumber(button.textContent);
+                this.buildANumber(button.textContent);
             })
         })
         document.querySelectorAll("[data-op]").forEach(button => {
             button.addEventListener('click', () => {
-                this.buildExpression(button.textContent);
+                this.buildAnExpression(button.textContent);
             })
         })
         document.querySelectorAll("[data-com]").forEach(button => {
