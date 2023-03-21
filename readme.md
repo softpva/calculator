@@ -12,7 +12,7 @@
 
 # Features
 > - This is the project of a calculator with the follow basics oprations: +, -, *, /, **, +/-, parenthisis and memory.
-> - This project was built in html-css-js linked to a wasm built in rust language.
+> - This project was built in html-css-js.
 > - In the top display is showed an infix expression that is formad by insertion of numbers, operators, memory and parenthisis.
 
 
